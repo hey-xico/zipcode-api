@@ -10,12 +10,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Francisco Almeida on 25/05/2016.
@@ -37,6 +40,23 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleError(AddressNotFoundException ex) {
         return new ResponseEntity<>(new GenericErrorDTO(ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleHttpMediaType(HttpMediaTypeNotSupportedException ex) {
+        return new ResponseEntity<>(new GenericErrorDTO(ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<List<GenericErrorDTO>> handlerValidationException(ConstraintViolationException ex) {
+        List<GenericErrorDTO> genericErrorDTOs =
+                ex.getConstraintViolations()
+                        .stream()
+                        .map(violation -> new GenericErrorDTO(violation.getMessage()))
+                        .collect(Collectors.toList());
+        return new ResponseEntity<>(genericErrorDTOs, HttpStatus.BAD_REQUEST);
     }
 
     private ValidationErrorDTO processFieldErrors(List<FieldError> fieldErrors) {

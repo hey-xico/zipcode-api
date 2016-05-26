@@ -7,6 +7,7 @@ import br.com.chico.addressapi.exception.AddressNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -27,21 +28,57 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Address getByZipcode(String zipcode) {
         StringBuilder zipcodeSB = new StringBuilder(zipcode);
-        Optional<Address> address = Optional.ofNullable(addressRepository.findByCep(zipcodeSB.toString()));
+        Optional<Address> address = Optional.ofNullable(addressRepository.findByZipcode(zipcodeSB.toString()));
 
 
         while (!address.isPresent() && !zipcodeSB.toString().equals("00000000")) {
             addZeroAtTheEnd(zipcodeSB);
-            address = Optional.ofNullable(addressRepository.findByCep(zipcodeSB.toString()));
+            address = Optional.ofNullable(addressRepository.findByZipcode(zipcodeSB.toString()));
         }
         return address.orElseThrow(() -> new AddressNotFoundException("Endereço não encontrado para o CEP"));
 
     }
 
     /**
+     * Get an {$link Address} by its id
      *
+     * @param id {$link Address}'s id
+     * @return {$link Address}
+     */
+    @Override
+    public Address findOne(Long id) {
+        return Optional
+                .ofNullable(this.addressRepository.findOne(id))
+                .orElseThrow(() -> new AddressNotFoundException("Endereço não encontrado para o ID::" + id));
+    }
+
+    /**
+     * Delete an {$link Address} by id.
+     *
+     * @param id {$link Address}'s id to be removed
+     */
+    @Override
+    public void delete(Long id) {
+        Optional
+                .ofNullable(this.addressRepository.findOne(id))
+                .ifPresent(address -> this.addressRepository.delete(address));
+    }
+
+    /**
+     * Save or Update {$link Address} object.
+     *
+     * @param address {$link Address} object
+     * @return a {$link Address} with a valid ID
+     */
+    @Override
+    public Address save(Address address) {
+        Objects.requireNonNull(address);
+        return this.addressRepository.save(address);
+    }
+
+    /**
      * Replace the last value, different of zero, by zero
-     * */
+     */
     private void addZeroAtTheEnd(StringBuilder zipCode) {
         for (int i = zipCode.length() - 1; i >= 0; i--) {
             if (zipCode.charAt(i) != '0') {

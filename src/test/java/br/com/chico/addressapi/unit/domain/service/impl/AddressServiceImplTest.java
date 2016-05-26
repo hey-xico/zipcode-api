@@ -43,12 +43,12 @@ public class AddressServiceImplTest {
     public void test_getByZipcode_WithAValidParam_MustReturnAnAddress(){
         //Given
         Address addressFixture = new Address(null, "Rua Turmalina", 246L, "06420010", "Barueri", "Sao Paulo", null, null);
-        Mockito.when(mockAddressRepository.findByCep(VALID_ZIPCODE)).thenReturn(addressFixture);
+        Mockito.when(mockAddressRepository.findByZipcode(VALID_ZIPCODE)).thenReturn(addressFixture);
         //When
 
         Address result = target.getByZipcode(VALID_ZIPCODE);
 
-        Mockito.verify(mockAddressRepository, times(1)).findByCep(VALID_ZIPCODE);
+        Mockito.verify(mockAddressRepository, times(1)).findByZipcode(VALID_ZIPCODE);
 
         assertNotNull(result);
         assertThat(result.getCity(), equalTo("Barueri"));
@@ -58,12 +58,12 @@ public class AddressServiceImplTest {
     public void test_getByZipcode_WhenReplaceByZeroOccurred_MustReturnAnAddress(){
         //Given
         Address addressFixture = new Address(null, "Rua Turmalina", 246L, "06420000", "Barueri", "Sao Paulo", null, null);
-        Mockito.when(mockAddressRepository.findByCep(VALID_ZIPCODE_REPLACED_BY_ZER0)).thenReturn(addressFixture);
+        Mockito.when(mockAddressRepository.findByZipcode(VALID_ZIPCODE_REPLACED_BY_ZER0)).thenReturn(addressFixture);
         //When
 
         Address result = target.getByZipcode(VALID_ZIPCODE);
 
-        Mockito.verify(mockAddressRepository, times(1)).findByCep(VALID_ZIPCODE_REPLACED_BY_ZER0);
+        Mockito.verify(mockAddressRepository, times(1)).findByZipcode(VALID_ZIPCODE_REPLACED_BY_ZER0);
 
         assertNotNull(result);
         assertThat(result.getCity(), equalTo("Barueri"));

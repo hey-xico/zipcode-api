@@ -1,0 +1,22 @@
+ noinspection SqlDialectInspectionForFile
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua Haddock Lobo', 1738, '01415000', 'São Paulo', 'SP', 'Jardim Paulista');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua Campos Sales', 1, '06401000', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua Duque de Caxias', 1, '06401010', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Avenida Henriqueta Mendes Guerra - de 1228 a 1404 - lado par', 1, '06401015', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Travessa Celidônio Guerra', 1, '06401020', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua João Pessoa', 1, '06401030', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua Fioravante Barletta', 1, '06401040', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Avenida Vinte e Seis de Março', 1, '06401050', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Boulevard Arnaldo Rodrigues Bittencourt', 1, '06401055', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua Dom Pedro II', 1, '06401060', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua Yasuo Fujita', 1, '06401065', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Praça São João Batista', 1, '06401070', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua do Paço', 1, '06401090', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua Maria Rosa Loureiro', 1, '06401100', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua Guilhermina Carril Loureiro', 1, '06401110', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua Professor João da Mata e Luz', 1, '06401120', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Avenida Arnaldo Rodrigues Bittencourt', 1, '06401125', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua José Maria Balieiro (Centro Comercial Barueri)', 1, '06401126', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Avenida João Acácio de Almeida (Centro Comercial Barueri)', 1, '06401127', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua João José dos Santos (Centro Comercial Barueri)', 1, '06401128', 'Barueri', 'SP', 'Centro');
+INSERT INTO ADDRESS (street, number, zipcode, city, state, district) VALUES ('Rua Geraldo Correa (Centro Comercial Barueri)', 1, '06401129', 'Barueri', 'SP', 'Centro');
