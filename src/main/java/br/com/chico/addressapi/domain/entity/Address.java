@@ -1,10 +1,12 @@
 package br.com.chico.addressapi.domain.entity;
 
+import br.com.chico.addressapi.domain.validation.Cep;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Francisco Almeida on 25/05/2016.
@@ -20,18 +22,24 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 8, nullable = false, unique = true)
-    private String cep;
+    @NotNull
+    private String street;
 
-    @Column(nullable = false)
-    private String logradouro;
+    @NotNull
+    private Long number;
 
-    private String bairro;
+    @NotNull
+    @Cep
+    private String zipcode;
 
-    @Column(nullable = false)
-    private String cidade;
+    @NotNull
+    private String city;
 
-    @Column(nullable = false)
-    private String estado;
+    @NotNull
+    private String state;
+
+    private String district;
+
+    private String complement;
 
 }
