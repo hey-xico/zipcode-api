@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,11 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<Object> handleHttpMediaType(HttpMediaTypeNotSupportedException ex) {
+        return new ResponseEntity<>(new GenericErrorDTO(ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<Object> handleValidation(ValidationException ex) {
         return new ResponseEntity<>(new GenericErrorDTO(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 

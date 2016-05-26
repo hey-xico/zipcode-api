@@ -4,11 +4,11 @@ import br.com.chico.addressapi.domain.entity.Address;
 import br.com.chico.addressapi.domain.repository.AddressRepository;
 import br.com.chico.addressapi.domain.service.AddressService;
 import br.com.chico.addressapi.exception.AddressNotFoundException;
+import br.com.chico.addressapi.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -73,7 +73,7 @@ public class AddressServiceImpl implements AddressService {
      */
     @Override
     public Address save(Address address) {
-        Objects.requireNonNull(address);
+        if(address== null) throw new ValidationException("O Endereço não pode ser nulo");
         return this.addressRepository.save(address);
     }
 
