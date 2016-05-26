@@ -14,7 +14,6 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -37,19 +36,16 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(AddressNotFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleError(AddressNotFoundException ex) {
-        return new ResponseEntity<>(new GenericErrorDTO(ex.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new GenericErrorDTO(ex.getMessage()), ex.getHttpStatus());
     }
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleHttpMediaType(HttpMediaTypeNotSupportedException ex) {
         return new ResponseEntity<>(new GenericErrorDTO(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<List<GenericErrorDTO>> handlerValidationException(ConstraintViolationException ex) {
         List<GenericErrorDTO> genericErrorDTOs =
                 ex.getConstraintViolations()

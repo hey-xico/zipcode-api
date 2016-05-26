@@ -13,9 +13,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -50,7 +50,6 @@ public class AddressAPI {
                 get(APP_PATH + "/" + VALID_ZIPCODE)
                         .accept(APPLICATION_JSON_VALUE)
                         .contentType(APPLICATION_JSON_VALUE))
-                .andDo(print())
                 .andExpect(jsonPath("$.zipcode").value("01415000"))
                 .andExpect(status().isOk());
     }
@@ -64,7 +63,6 @@ public class AddressAPI {
                 get(APP_PATH + "/06401011")
                         .accept(APPLICATION_JSON_VALUE)
                         .contentType(APPLICATION_JSON_VALUE))
-                .andDo(print())
                 .andExpect(jsonPath("$.zipcode").value("06401010"))
                 .andExpect(status().isOk());
     }
@@ -78,7 +76,6 @@ public class AddressAPI {
                 get(APP_PATH + "/0640101")
                         .accept(APPLICATION_JSON_VALUE)
                         .contentType(APPLICATION_JSON_VALUE))
-                .andDo(print())
                 .andExpect(jsonPath("$..message").value("CEP inválido"))
                 .andExpect(status().isBadRequest());
     }
@@ -89,7 +86,6 @@ public class AddressAPI {
                 get(APP_PATH + "?id=1")
                         .accept(APPLICATION_JSON_VALUE)
                         .contentType(APPLICATION_JSON_VALUE))
-                .andDo(print())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(status().isOk());
     }
@@ -100,8 +96,29 @@ public class AddressAPI {
                 get(APP_PATH + "?id=100")
                         .accept(APPLICATION_JSON_VALUE)
                         .contentType(APPLICATION_JSON_VALUE))
-                .andDo(print())
                 .andExpect(jsonPath("$..message").value("Endereço não encontrado para o ID::100"))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
     }
+
+
+
+    @Test
+    public void given_ValidId_ShouldRemoveAnAddress() throws Exception {
+        mockMvc.perform(
+                delete(APP_PATH + "/1")
+                        .accept(APPLICATION_JSON_VALUE)
+                        .contentType(APPLICATION_JSON_VALUE))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void given_InvalidId_WhenTryToRemoveIt_ReturnErrorMessage() throws Exception {
+        mockMvc.perform(
+                delete(APP_PATH + "/100")
+                        .accept(APPLICATION_JSON_VALUE)
+                        .contentType(APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$..message").value("Endereço não encontrado para o ID::100"))
+                .andExpect(status().isNotFound());
+    }
+
 }

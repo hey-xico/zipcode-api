@@ -5,6 +5,7 @@ import br.com.chico.addressapi.domain.repository.AddressRepository;
 import br.com.chico.addressapi.domain.service.AddressService;
 import br.com.chico.addressapi.exception.AddressNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -35,7 +36,7 @@ public class AddressServiceImpl implements AddressService {
             addZeroAtTheEnd(zipcodeSB);
             address = Optional.ofNullable(addressRepository.findByZipcode(zipcodeSB.toString()));
         }
-        return address.orElseThrow(() -> new AddressNotFoundException("Endereço não encontrado para o CEP"));
+        return address.orElseThrow(() -> new AddressNotFoundException("Endereço não encontrado para o CEP", HttpStatus.NOT_FOUND));
 
     }
 
@@ -49,7 +50,7 @@ public class AddressServiceImpl implements AddressService {
     public Address findOne(Long id) {
         return Optional
                 .ofNullable(this.addressRepository.findOne(id))
-                .orElseThrow(() -> new AddressNotFoundException("Endereço não encontrado para o ID::" + id));
+                .orElseThrow(() -> new AddressNotFoundException("Endereço não encontrado para o ID::" + id, HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -59,9 +60,9 @@ public class AddressServiceImpl implements AddressService {
      */
     @Override
     public void delete(Long id) {
-        Optional
+        this.addressRepository.delete(Optional
                 .ofNullable(this.addressRepository.findOne(id))
-                .ifPresent(address -> this.addressRepository.delete(address));
+                .orElseThrow(()->new AddressNotFoundException("Endereço não encontrado para o ID::" + id, HttpStatus.NOT_FOUND)));
     }
 
     /**
