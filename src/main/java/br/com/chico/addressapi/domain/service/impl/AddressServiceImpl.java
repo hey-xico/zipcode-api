@@ -20,7 +20,6 @@ public class AddressServiceImpl implements AddressService {
 
     /**
      * Return a {@link Address} by its zipcode.
-     * When an address wasn't found by the given zipcode we will replace its suffix {@link https://goo.gl/TErTqE} to find a close address
      *
      * @param zipcode A valid {@link Address} zipcode
      * @return {@link Address} for the given zipcode
@@ -28,15 +27,21 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Address getByZipcode(String zipcode) {
         StringBuilder zipcodeSB = new StringBuilder(zipcode);
-        Optional<Address> address = addressRepository.findByCep(zipcodeSB.toString());
-        while (address == null && zipcodeSB.subSequence(5, 7) != "000") {
+        Optional<Address> address = Optional.ofNullable(addressRepository.findByCep(zipcodeSB.toString()));
+
+
+        while (!address.isPresent() && !zipcodeSB.toString().equals("00000000")) {
             addZeroAtTheEnd(zipcodeSB);
-            address = addressRepository.findByCep(zipcodeSB.toString());
+            address = Optional.ofNullable(addressRepository.findByCep(zipcodeSB.toString()));
         }
-        return address.orElseThrow(()->new AddressNotFoundException("Endereço não encontrado para o CEP"));
+        return address.orElseThrow(() -> new AddressNotFoundException("Endereço não encontrado para o CEP"));
 
     }
 
+    /**
+     *
+     * Replace the last value, different of zero, by zero
+     * */
     private void addZeroAtTheEnd(StringBuilder zipCode) {
         for (int i = zipCode.length() - 1; i >= 0; i--) {
             if (zipCode.charAt(i) != '0') {
