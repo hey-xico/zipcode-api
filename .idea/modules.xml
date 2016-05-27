@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressapi.iml" filepath="$PROJECT_DIR$/.idea/modules/addressapi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressapi_main.iml" filepath="$PROJECT_DIR$/.idea/modules/addressapi_main.iml" group="addressapi" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/addressapi_test.iml" filepath="$PROJECT_DIR$/.idea/modules/addressapi_test.iml" group="addressapi" />
+      <module fileurl="file://$PROJECT_DIR$/zipcode-api.iml" filepath="$PROJECT_DIR$/zipcode-api.iml" />
     </modules>
   </component>
 </project>
